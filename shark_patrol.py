@@ -28,10 +28,10 @@ LEVELS = {"NONE": 0, "FIRST_QUARTILE": 1, "SECOND_QUARTILE": 2,
           "THIRD_QUARTILE": 3, "FOURTH_QUARTILE": 4}
 
 THEMES = {
-    "dark": dict(bg="#0d0b07", sea="#ffb000", sea_a=(.05, .10), fin="#fff1c2", box="#ffb000",
-                 label_text="#0d0b07", text="#b8a37a", accent="#ffb000", fov="#ff5a1f", led="#ff5a1f",
-                 glass="#ffffff", glass_a=(.06, .02), edge="#ffd88a",
-                 blobs=("#ffb000", "#ff5a1f", "#7a4a00"), blob_a=.25),
+    "dark": dict(bg="#060503", sea="#ffb000", sea_a=(.05, .10), fin="#fff1c2", box="#ffb000",
+                 label_text="#060503", text="#b8a37a", accent="#ffb000", fov="#ff5a1f", led="#ff5a1f",
+                 glass="#ffffff", glass_a=(.045, .015), edge="#ffd88a",
+                 blobs=("#ffb000", "#ff5a1f", "#7a4a00"), blob_a=.12),
     "light": dict(bg="#fbf6ec", sea="#8a5a12", sea_a=(.07, .14), fin="#2b1d06", box="#a86400",
                   label_text="#ffffff", text="#6e5a36", accent="#a86400", fov="#c2410c", led="#c2410c",
                   glass="#ffffff", glass_a=(.7, .4), edge="#ffffff",

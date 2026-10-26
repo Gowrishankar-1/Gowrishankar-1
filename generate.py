@@ -37,11 +37,11 @@ TELE_START, TELE_DT = 2.5, 0.22
 FOOT_IN = 3.8
 
 THEMES = {
-    "dark": dict(bg="#0d0b07", panel="#17120a", border="#3a2e18", text="#fff4dc",
-                 muted="#b8a37a", accent="#ffb000", accent2="#ff5a1f", boot_bg="#080603",
+    "dark": dict(bg="#060503", panel="#100c06", border="#3a2e18", text="#fff4dc",
+                 muted="#b8a37a", accent="#ffb000", accent2="#ff5a1f", boot_bg="#040302",
                  pts=("#4a3510", "#8a5a12", "#ffb000", "#fff1c2"), grid="#2a2010",
-                 glass="#ffffff", glass_a=(.07, .02), edge="#ffd88a",
-                 blobs=("#ffb000", "#ff5a1f", "#7a4a00"), blob_a=.28,
+                 glass="#ffffff", glass_a=(.05, .015), edge="#ffd88a",
+                 blobs=("#ffb000", "#ff5a1f", "#7a4a00"), blob_a=.14,
                  title=("#ffd36b", "#ff5a1f")),
     "light": dict(bg="#fbf6ec", panel="#ffffff", border="#e6d7b8", text="#241a0a",
                   muted="#6e5a36", accent="#a86400", accent2="#c2410c", boot_bg="#120d05",
