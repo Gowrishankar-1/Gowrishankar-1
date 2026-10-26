@@ -28,13 +28,47 @@ LEVELS = {"NONE": 0, "FIRST_QUARTILE": 1, "SECOND_QUARTILE": 2,
           "THIRD_QUARTILE": 3, "FOURTH_QUARTILE": 4}
 
 THEMES = {
-    "dark": dict(bg="#0b1622", border="#1f3347", sea="#12304a", sea2="#0e2539",
-                 fin="#d0d7de", box="#39d353", label_text="#0b1622",
-                 text="#7d8fa3", accent="#39d353", fov="#39d353", led="#ff5c5c"),
-    "light": dict(bg="#eef6fc", border="#c9dcea", sea="#c3dcee", sea2="#d6e8f5",
-                  fin="#1f2a36", box="#1a7f37", label_text="#ffffff",
-                  text="#4f6273", accent="#1a7f37", fov="#1a7f37", led="#d1242f"),
+    "dark": dict(bg="#0a0614", sea="#ffffff", sea_a=(.05, .11), fin="#ffe3c4", box="#ff7a3d",
+                 label_text="#0a0614", text="#a597c7", accent="#ff7a3d", fov="#ff4fa3", led="#ff4fa3",
+                 glass="#ffffff", glass_a=(.08, .02), edge="#ffffff",
+                 blobs=("#7b2ff7", "#ff2e88", "#ff7a3d"), blob_a=.4),
+    "light": dict(bg="#f7f2fc", sea="#5b3c88", sea_a=(.07, .14), fin="#2a1840", box="#e2550f",
+                  label_text="#ffffff", text="#6b5b85", accent="#e2550f", fov="#c2185b", led="#c2185b",
+                  glass="#ffffff", glass_a=(.7, .4), edge="#ffffff",
+                  blobs=("#b98cff", "#ff8fc4", "#ffb37a"), blob_a=.5),
 }
+
+
+def glass_bg(c, w, h):
+    """Soft colour blobs drifting behind frosted panels (cheap: gradients, no blur filter)."""
+    out = [f'<clipPath id="card"><rect width="{w}" height="{h}" rx="12"/></clipPath>',
+           '<linearGradient id="glassFill" x1="0" y1="0" x2="0" y2="1">'
+           f'<stop offset="0" stop-color="{c["glass"]}" stop-opacity="{c["glass_a"][0]}"/>'
+           f'<stop offset="1" stop-color="{c["glass"]}" stop-opacity="{c["glass_a"][1]}"/></linearGradient>',
+           '<linearGradient id="glassEdge" x1="0" y1="0" x2="1" y2="1">'
+           f'<stop offset="0" stop-color="{c["edge"]}" stop-opacity=".55"/>'
+           f'<stop offset=".45" stop-color="{c["edge"]}" stop-opacity=".08"/>'
+           f'<stop offset="1" stop-color="{c["edge"]}" stop-opacity=".25"/></linearGradient>']
+    for i, col in enumerate(c["blobs"]):
+        out.append(f'<radialGradient id="blob{i}"><stop offset="0" stop-color="{col}" stop-opacity="{c["blob_a"]}"/>'
+                   f'<stop offset="1" stop-color="{col}" stop-opacity="0"/></radialGradient>')
+    out.append(f'<rect width="{w}" height="{h}" rx="12" fill="{c["bg"]}"/>')
+    out.append('<g clip-path="url(#card)">')
+    spots = [(.82, .1, .55, "-60 40"), (.12, .95, .5, "70 -30"), (.5, .45, .38, "-40 -25")]
+    for i, (fx, fy, fr, drift) in enumerate(spots[:len(c["blobs"])]):
+        r = fr * w
+        out.append(f'<circle cx="{fx * w:.0f}" cy="{fy * h:.0f}" r="{r:.0f}" fill="url(#blob{i})">'
+                   f'<animateTransform attributeName="transform" type="translate" values="0 0;{drift};0 0" '
+                   f'dur="{16 + i * 5}s" repeatCount="indefinite" calcMode="spline" '
+                   f'keySplines=".45 0 .55 1;.45 0 .55 1" keyTimes="0;.5;1"/></circle>')
+    out.append('</g>')
+    out.append(f'<rect x=".5" y=".5" width="{w - 1}" height="{h - 1}" rx="12" fill="none" stroke="url(#glassEdge)"/>')
+    return out
+
+
+def glass_rect(x, y, w, h, rx=10):
+    return (f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="{rx}" fill="url(#glassFill)" stroke="url(#glassEdge)"/>'
+            f'<path d="M{x + rx},{y + .8} H{x + w - rx}" stroke="#ffffff" stroke-opacity=".35" stroke-width=".8"/>')
 
 
 # ---------------------------------------------------------------- data
@@ -122,13 +156,14 @@ def build(days, total, theme):
     a(f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}" '
       f'font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace">')
     a(f"""<style>
-.sea{{fill:{c['sea']};animation:swell 5s ease-in-out infinite}}
-@keyframes swell{{0%,100%{{fill:{c['sea']}}}50%{{fill:{c['sea2']}}}}}
+.sea{{fill:{c['sea']};fill-opacity:{c['sea_a'][0]};animation:swell 5s ease-in-out infinite}}
+@keyframes swell{{0%,100%{{fill-opacity:{c['sea_a'][0]}}}50%{{fill-opacity:{c['sea_a'][1]}}}}}
 .hud{{fill:{c['text']};font-size:9px;letter-spacing:.5px}}
 .acc{{fill:{c['accent']}}}
 .lbl{{fill:{c['label_text']};font-size:7px;font-weight:700}}
 </style>""")
-    a(f'<rect x=".5" y=".5" width="{W-1}" height="{H-1}" rx="8" fill="{c["bg"]}" stroke="{c["border"]}"/>')
+    out += glass_bg(c, W, H)
+    a(glass_rect(gx - 8, gy - 8, grid_w + 16, grid_h + 16, 8))
 
     # HUD
     sharks = [x for x in cells if x["level"] > 0]

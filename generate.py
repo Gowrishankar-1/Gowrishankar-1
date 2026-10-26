@@ -37,13 +37,51 @@ TELE_START, TELE_DT = 2.5, 0.22
 FOOT_IN = 3.8
 
 THEMES = {
-    "dark": dict(bg="#0b1622", panel="#0d1b29", border="#1f3347", text="#d0d7de",
-                 muted="#7d8fa3", accent="#39d353", accent2="#58c4dc", boot_bg="#05090f",
-                 pts=("#1d5670", "#2aa7b8", "#39d353", "#e3f76a"), grid="#173049"),
-    "light": dict(bg="#eef6fc", panel="#f8fbfe", border="#c9dcea", text="#1f2a36",
-                  muted="#5b6b7b", accent="#1a7f37", accent2="#0969da", boot_bg="#0b1622",
-                  pts=("#a9cbe3", "#4f97c4", "#1f7a4d", "#0b3d2a"), grid="#d7e6f1"),
+    "dark": dict(bg="#0a0614", panel="#1a1030", border="#3a2a5c", text="#f3ecff",
+                 muted="#a597c7", accent="#ff7a3d", accent2="#ff4fa3", boot_bg="#07040d",
+                 pts=("#57208f", "#c2307a", "#ff6b2c", "#ffd66b"), grid="#2a1f45",
+                 glass="#ffffff", glass_a=(.10, .03), edge="#ffffff",
+                 blobs=("#7b2ff7", "#ff2e88", "#ff7a3d"), blob_a=.45,
+                 title=("#ffb347", "#ff4fa3")),
+    "light": dict(bg="#f7f2fc", panel="#ffffff", border="#e0d3f0", text="#1d1530",
+                  muted="#6b5b85", accent="#e2550f", accent2="#c2185b", boot_bg="#120a20",
+                  pts=("#e3cdf3", "#c25a9a", "#d9480f", "#4a1500"), grid="#e8dcf5",
+                  glass="#ffffff", glass_a=(.75, .45), edge="#ffffff",
+                  blobs=("#b98cff", "#ff8fc4", "#ffb37a"), blob_a=.55,
+                  title=("#e2550f", "#c2185b")),
 }
+
+
+def glass_bg(c, w, h):
+    """Soft colour blobs drifting behind frosted panels (cheap: gradients, no blur filter)."""
+    out = [f'<clipPath id="card"><rect width="{w}" height="{h}" rx="12"/></clipPath>',
+           '<linearGradient id="glassFill" x1="0" y1="0" x2="0" y2="1">'
+           f'<stop offset="0" stop-color="{c["glass"]}" stop-opacity="{c["glass_a"][0]}"/>'
+           f'<stop offset="1" stop-color="{c["glass"]}" stop-opacity="{c["glass_a"][1]}"/></linearGradient>',
+           '<linearGradient id="glassEdge" x1="0" y1="0" x2="1" y2="1">'
+           f'<stop offset="0" stop-color="{c["edge"]}" stop-opacity=".55"/>'
+           f'<stop offset=".45" stop-color="{c["edge"]}" stop-opacity=".08"/>'
+           f'<stop offset="1" stop-color="{c["edge"]}" stop-opacity=".25"/></linearGradient>']
+    for i, col in enumerate(c["blobs"]):
+        out.append(f'<radialGradient id="blob{i}"><stop offset="0" stop-color="{col}" stop-opacity="{c["blob_a"]}"/>'
+                   f'<stop offset="1" stop-color="{col}" stop-opacity="0"/></radialGradient>')
+    out.append(f'<rect width="{w}" height="{h}" rx="12" fill="{c["bg"]}"/>')
+    out.append('<g clip-path="url(#card)">')
+    spots = [(.82, .1, .55, "-60 40"), (.12, .95, .5, "70 -30"), (.5, .45, .38, "-40 -25")]
+    for i, (fx, fy, fr, drift) in enumerate(spots[:len(c["blobs"])]):
+        r = fr * w
+        out.append(f'<circle cx="{fx * w:.0f}" cy="{fy * h:.0f}" r="{r:.0f}" fill="url(#blob{i})">'
+                   f'<animateTransform attributeName="transform" type="translate" values="0 0;{drift};0 0" '
+                   f'dur="{16 + i * 5}s" repeatCount="indefinite" calcMode="spline" '
+                   f'keySplines=".45 0 .55 1;.45 0 .55 1" keyTimes="0;.5;1"/></circle>')
+    out.append('</g>')
+    out.append(f'<rect x=".5" y=".5" width="{w - 1}" height="{h - 1}" rx="12" fill="none" stroke="url(#glassEdge)"/>')
+    return out
+
+
+def glass_rect(x, y, w, h, rx=10):
+    return (f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="{rx}" fill="url(#glassFill)" stroke="url(#glassEdge)"/>'
+            f'<path d="M{x + rx},{y + .8} H{x + w - rx}" stroke="#ffffff" stroke-opacity=".35" stroke-width=".8"/>')
 
 
 def once(attr, t0, t1, v0, v1, extra=""):
@@ -69,7 +107,7 @@ def lidar_panel(c, art):
     R = math.hypot(LP_W / 2, PANEL_H) + 10
     C = 2 * math.pi * R
 
-    a(f'<clipPath id="lp"><rect x="{LP_X}" y="{PANEL_Y}" width="{LP_W}" height="{PANEL_H}" rx="6"/></clipPath>')
+    a(f'<clipPath id="lp"><rect x="{LP_X}" y="{PANEL_Y}" width="{LP_W}" height="{PANEL_H}" rx="10"/></clipPath>')
     a(f'<mask id="scan"><circle cx="{cx}" cy="{cy}" r="{R:.1f}" fill="none" stroke="#fff" '
       f'stroke-width="{2 * R:.1f}" stroke-dasharray="{C:.1f} {C:.1f}" transform="rotate(180 {cx} {cy})">'
       + once("stroke-dasharray", SCAN[0], SCAN[1], f"0 {C:.1f}", f"{C / 2:.1f} {C:.1f}")
@@ -153,7 +191,7 @@ def telemetry_panel(c, cfg):
     a(f'<text x="{RP_X + RP_W - 10}" y="{PANEL_Y + 15}" class="tag" text-anchor="end">'
       f'<tspan fill="{c["accent"]}">&#9679;</tspan> ONLINE</text>')
     a(f'<g opacity="1">{once("opacity", TELE_START - .15, TELE_START + .25, 0, 1)}'
-      f'<text x="{x}" y="{y}" font-size="17" font-weight="700" fill="{c["accent"]}" filter="url(#glow)">'
+      f'<text x="{x}" y="{y}" font-size="17" font-weight="700" fill="url(#titleGrad)" filter="url(#glow)">'
       f'{escape(cfg["title"])}</text>'
       f'<text x="{x}" y="{y + 15}" font-size="9.5" fill="{c["muted"]}">{escape(cfg["subtitle"])}</text></g>')
     y += 36
@@ -180,26 +218,26 @@ def boot_overlay(c, cfg):
     a = out.append
     n = len(cfg["boot"])
     a(f'<g opacity="0">{once("opacity", BOOT_FADE[0], BOOT_FADE[1], 1, 0)}')
-    a(f'<rect width="{W}" height="{H}" rx="8" fill="{c["boot_bg"]}"/>')
+    a(f'<rect width="{W}" height="{H}" rx="12" fill="{c["boot_bg"]}"/>')
     y0 = 70
     for i, (line, status) in enumerate(cfg["boot"]):
         t = BOOT_START + i * BOOT_DT
         y = y0 + i * 22
         a(f'<clipPath id="bt{i}"><rect x="30" y="{y - 14}" height="20" width="820">'
           + once("width", t, t + .16, 0, 820) + '</rect></clipPath>')
-        tag = (f'<tspan fill="#39d353">[  OK  ]</tspan> ' if status else
-               f'<tspan fill="#58c4dc">&gt;&gt;</tspan> ')
-        a(f'<text x="40" y="{y}" font-size="13" fill="#c9d1d9" clip-path="url(#bt{i})">{tag}{escape(line)}</text>')
+        tag = (f'<tspan fill="#ff7a3d">[  OK  ]</tspan> ' if status else
+               f'<tspan fill="#ff4fa3">&gt;&gt;</tspan> ')
+        a(f'<text x="40" y="{y}" font-size="13" fill="#efe6ff" clip-path="url(#bt{i})">{tag}{escape(line)}</text>')
     yc = y0 + n * 22
     t_end = BOOT_START + n * BOOT_DT
-    a(f'<text x="40" y="{H - 92}" font-size="10" fill="#7d8fa3" letter-spacing="2">SYSTEM CHECK</text>'
-      f'<rect x="40" y="{H - 82}" width="{W - 80}" height="8" rx="2" fill="none" stroke="#1f3347"/>'
-      f'<rect x="42" y="{H - 80}" width="{W - 84}" height="4" fill="#39d353">'
+    a(f'<text x="40" y="{H - 92}" font-size="10" fill="#a597c7" letter-spacing="2">SYSTEM CHECK</text>'
+      f'<rect x="40" y="{H - 82}" width="{W - 80}" height="8" rx="2" fill="none" stroke="#3a2a5c"/>'
+      f'<rect x="42" y="{H - 80}" width="{W - 84}" height="4" fill="url(#titleGrad)">'
       + once("width", .05, t_end, 0, W - 84) + '</rect>'
-      f'<text x="{W - 40}" y="{H - 92}" font-size="10" fill="#39d353" text-anchor="end">{n} MODULES</text>')
-    a(f'<text x="40" y="{yc}" font-size="13" fill="#58c4dc" opacity="0">'
+      f'<text x="{W - 40}" y="{H - 92}" font-size="10" fill="#ffb347" text-anchor="end">{n} MODULES</text>')
+    a(f'<text x="40" y="{yc}" font-size="13" fill="#ff4fa3" opacity="0">'
       + once("opacity", BOOT_START + n * BOOT_DT, BOOT_START + n * BOOT_DT + .01, 0, 1)
-      + 'launching mission control <tspan fill="#39d353">&#9612;'
+      + 'launching mission control <tspan fill="#ffb347">&#9612;'
       '<animate attributeName="opacity" values="1;0;1" dur=".5s" repeatCount="indefinite"/></tspan></text>')
     a("</g>")
     return out
@@ -211,7 +249,7 @@ def footer(c, cfg):
     y = FOOT_Y + 22
     x0, x1 = 120, W - 30
     a(f'<g opacity="1">{once("opacity", FOOT_IN, FOOT_IN + .4, 0, 1)}')
-    a(f'<rect x="16" y="{FOOT_Y}" width="{W - 32}" height="44" rx="6" fill="{c["panel"]}" stroke="{c["border"]}"/>')
+    a(glass_rect(16, FOOT_Y, W - 32, 44))
     a(f'<line x1="{x0}" y1="{y}" x2="{x1}" y2="{y}" stroke="{c["border"]}" stroke-width="1.5"/>')
     a(f'<path d="M{x1 - 6},{y - 4} L{x1},{y} L{x1 - 6},{y + 4}" fill="none" stroke="{c["border"]}" stroke-width="1.5"/>')
     # message packets travelling along the bus (drawn under the topic boxes)
@@ -219,14 +257,16 @@ def footer(c, cfg):
         b = FOOT_IN + k * 1.07
         a(f'<circle r="2.6" fill="{c["accent"]}" opacity="0"><set attributeName="opacity" to="1" begin="{b:.2f}s" fill="freeze"/>'
           f'<animateMotion path="M{x0},{y} H{x1 - 8}" begin="{b:.2f}s" dur="3.2s" repeatCount="indefinite"/></circle>')
-    a(f'<ellipse cx="72" cy="{y}" rx="44" ry="12" fill="{c["panel"]}" stroke="{c["accent"]}" stroke-width="1.4"/>'
+    a(f'<ellipse cx="72" cy="{y}" rx="44" ry="12" fill="{c["bg"]}"/>')
+    a(f'<ellipse cx="72" cy="{y}" rx="44" ry="12" fill="{c["accent"]}" fill-opacity=".14" stroke="{c["accent"]}" stroke-width="1.4"/>'
       f'<text x="72" y="{y + 4}" text-anchor="middle" font-size="11" font-weight="700" fill="{c["accent"]}">/gowri</text>')
     topics = cfg["topics"]
     span = (x1 - 40) - (x0 + 30)
     for i, t in enumerate(topics):
         tx = x0 + 30 + span * (i + .5) / len(topics)
         w = len(t) * 6.4 + 14
-        a(f'<rect x="{tx - w / 2:.1f}" y="{y - 10}" width="{w:.1f}" height="20" rx="3" fill="{c["panel"]}" stroke="{c["accent2"]}"/>'
+        a(f'<rect x="{tx - w / 2:.1f}" y="{y - 10}" width="{w:.1f}" height="20" rx="10" fill="{c["bg"]}"/>')
+        a(f'<rect x="{tx - w / 2:.1f}" y="{y - 10}" width="{w:.1f}" height="20" rx="10" fill="{c["accent2"]}" fill-opacity=".12" stroke="{c["accent2"]}" stroke-opacity=".7"/>'
           f'<text x="{tx:.1f}" y="{y + 3.5}" text-anchor="middle" font-size="10" fill="{c["accent2"]}">{escape(t)}</text>')
     a("</g>")
     return out
@@ -249,8 +289,10 @@ text{{white-space:pre}}
       f'<pattern id="scanlines" width="4" height="3" patternUnits="userSpaceOnUse"><rect width="4" height="1" fill="{c["text"]}"/></pattern>'
       f'<linearGradient id="sweep" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="{c["accent"]}" stop-opacity="0"/>'
       f'<stop offset=".5" stop-color="{c["accent"]}" stop-opacity=".05"/><stop offset="1" stop-color="{c["accent"]}" stop-opacity="0"/></linearGradient>'
+      f'<linearGradient id="titleGrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="{c["title"][0]}"/>'
+      f'<stop offset="1" stop-color="{c["title"][1]}"/></linearGradient>'
       '</defs>')
-    a(f'<rect x=".5" y=".5" width="{W - 1}" height="{H - 1}" rx="8" fill="{c["bg"]}" stroke="{c["border"]}"/>')
+    out += glass_bg(c, W, H)
 
     # top bar
     bars = "".join(
@@ -265,7 +307,7 @@ text{{white-space:pre}}
 
     # panels
     for px, pw in ((LP_X, LP_W), (RP_X, RP_W)):
-        a(f'<rect x="{px}" y="{PANEL_Y}" width="{pw}" height="{PANEL_H}" rx="6" fill="{c["panel"]}" stroke="{c["border"]}"/>')
+        a(glass_rect(px, PANEL_Y, pw, PANEL_H))
         for sxn in (0, 1):
             for syn in (0, 1):
                 bx, by = px + sxn * pw, PANEL_Y + syn * PANEL_H
@@ -277,7 +319,7 @@ text{{white-space:pre}}
     out += footer(c, cfg)
 
     # CRT finish: scanlines plus a slow refresh band
-    a(f'<rect width="{W}" height="{H}" rx="8" fill="url(#scanlines)" opacity=".035" pointer-events="none"/>')
+    a(f'<rect width="{W}" height="{H}" rx="12" fill="url(#scanlines)" opacity=".035" pointer-events="none"/>')
     a(f'<rect x="0" y="-120" width="{W}" height="120" fill="url(#sweep)" pointer-events="none">'
       f'<animate attributeName="y" values="-120;{H}" dur="7s" repeatCount="indefinite"/></rect>')
 
