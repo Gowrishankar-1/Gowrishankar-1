@@ -37,18 +37,18 @@ TELE_START, TELE_DT = 2.5, 0.22
 FOOT_IN = 3.8
 
 THEMES = {
-    "dark": dict(bg="#0a0614", panel="#1a1030", border="#3a2a5c", text="#f3ecff",
-                 muted="#a597c7", accent="#ff7a3d", accent2="#ff4fa3", boot_bg="#07040d",
-                 pts=("#57208f", "#c2307a", "#ff6b2c", "#ffd66b"), grid="#2a1f45",
-                 glass="#ffffff", glass_a=(.10, .03), edge="#ffffff",
-                 blobs=("#7b2ff7", "#ff2e88", "#ff7a3d"), blob_a=.45,
-                 title=("#ffb347", "#ff4fa3")),
-    "light": dict(bg="#f7f2fc", panel="#ffffff", border="#e0d3f0", text="#1d1530",
-                  muted="#6b5b85", accent="#e2550f", accent2="#c2185b", boot_bg="#120a20",
-                  pts=("#e3cdf3", "#c25a9a", "#d9480f", "#4a1500"), grid="#e8dcf5",
-                  glass="#ffffff", glass_a=(.75, .45), edge="#ffffff",
-                  blobs=("#b98cff", "#ff8fc4", "#ffb37a"), blob_a=.55,
-                  title=("#e2550f", "#c2185b")),
+    "dark": dict(bg="#0d0b07", panel="#17120a", border="#3a2e18", text="#fff4dc",
+                 muted="#b8a37a", accent="#ffb000", accent2="#ff5a1f", boot_bg="#080603",
+                 pts=("#4a3510", "#8a5a12", "#ffb000", "#fff1c2"), grid="#2a2010",
+                 glass="#ffffff", glass_a=(.07, .02), edge="#ffd88a",
+                 blobs=("#ffb000", "#ff5a1f", "#7a4a00"), blob_a=.28,
+                 title=("#ffd36b", "#ff5a1f")),
+    "light": dict(bg="#fbf6ec", panel="#ffffff", border="#e6d7b8", text="#241a0a",
+                  muted="#6e5a36", accent="#a86400", accent2="#c2410c", boot_bg="#120d05",
+                  pts=("#efdcb4", "#d39b3a", "#a86400", "#3d2600"), grid="#efe3cc",
+                  glass="#ffffff", glass_a=(.72, .45), edge="#ffffff",
+                  blobs=("#ffd38a", "#ffb37a", "#f0d9a8"), blob_a=.6,
+                  title=("#a86400", "#c2410c")),
 }
 
 
@@ -225,19 +225,19 @@ def boot_overlay(c, cfg):
         y = y0 + i * 22
         a(f'<clipPath id="bt{i}"><rect x="30" y="{y - 14}" height="20" width="820">'
           + once("width", t, t + .16, 0, 820) + '</rect></clipPath>')
-        tag = (f'<tspan fill="#ff7a3d">[  OK  ]</tspan> ' if status else
-               f'<tspan fill="#ff4fa3">&gt;&gt;</tspan> ')
-        a(f'<text x="40" y="{y}" font-size="13" fill="#efe6ff" clip-path="url(#bt{i})">{tag}{escape(line)}</text>')
+        tag = (f'<tspan fill="#ffb000">[  OK  ]</tspan> ' if status else
+               f'<tspan fill="#ff5a1f">&gt;&gt;</tspan> ')
+        a(f'<text x="40" y="{y}" font-size="13" fill="#f3e6c8" clip-path="url(#bt{i})">{tag}{escape(line)}</text>')
     yc = y0 + n * 22
     t_end = BOOT_START + n * BOOT_DT
-    a(f'<text x="40" y="{H - 92}" font-size="10" fill="#a597c7" letter-spacing="2">SYSTEM CHECK</text>'
-      f'<rect x="40" y="{H - 82}" width="{W - 80}" height="8" rx="2" fill="none" stroke="#3a2a5c"/>'
+    a(f'<text x="40" y="{H - 92}" font-size="10" fill="#b8a37a" letter-spacing="2">SYSTEM CHECK</text>'
+      f'<rect x="40" y="{H - 82}" width="{W - 80}" height="8" rx="2" fill="none" stroke="#3a2e18"/>'
       f'<rect x="42" y="{H - 80}" width="{W - 84}" height="4" fill="url(#titleGrad)">'
       + once("width", .05, t_end, 0, W - 84) + '</rect>'
-      f'<text x="{W - 40}" y="{H - 92}" font-size="10" fill="#ffb347" text-anchor="end">{n} MODULES</text>')
-    a(f'<text x="40" y="{yc}" font-size="13" fill="#ff4fa3" opacity="0">'
+      f'<text x="{W - 40}" y="{H - 92}" font-size="10" fill="#ffb000" text-anchor="end">{n} MODULES</text>')
+    a(f'<text x="40" y="{yc}" font-size="13" fill="#ff5a1f" opacity="0">'
       + once("opacity", BOOT_START + n * BOOT_DT, BOOT_START + n * BOOT_DT + .01, 0, 1)
-      + 'launching mission control <tspan fill="#ffb347">&#9612;'
+      + 'launching mission control <tspan fill="#ffb000">&#9612;'
       '<animate attributeName="opacity" values="1;0;1" dur=".5s" repeatCount="indefinite"/></tspan></text>')
     a("</g>")
     return out

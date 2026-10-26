@@ -28,14 +28,14 @@ LEVELS = {"NONE": 0, "FIRST_QUARTILE": 1, "SECOND_QUARTILE": 2,
           "THIRD_QUARTILE": 3, "FOURTH_QUARTILE": 4}
 
 THEMES = {
-    "dark": dict(bg="#0a0614", sea="#ffffff", sea_a=(.05, .11), fin="#ffe3c4", box="#ff7a3d",
-                 label_text="#0a0614", text="#a597c7", accent="#ff7a3d", fov="#ff4fa3", led="#ff4fa3",
-                 glass="#ffffff", glass_a=(.08, .02), edge="#ffffff",
-                 blobs=("#7b2ff7", "#ff2e88", "#ff7a3d"), blob_a=.4),
-    "light": dict(bg="#f7f2fc", sea="#5b3c88", sea_a=(.07, .14), fin="#2a1840", box="#e2550f",
-                  label_text="#ffffff", text="#6b5b85", accent="#e2550f", fov="#c2185b", led="#c2185b",
+    "dark": dict(bg="#0d0b07", sea="#ffb000", sea_a=(.05, .10), fin="#fff1c2", box="#ffb000",
+                 label_text="#0d0b07", text="#b8a37a", accent="#ffb000", fov="#ff5a1f", led="#ff5a1f",
+                 glass="#ffffff", glass_a=(.06, .02), edge="#ffd88a",
+                 blobs=("#ffb000", "#ff5a1f", "#7a4a00"), blob_a=.25),
+    "light": dict(bg="#fbf6ec", sea="#8a5a12", sea_a=(.07, .14), fin="#2b1d06", box="#a86400",
+                  label_text="#ffffff", text="#6e5a36", accent="#a86400", fov="#c2410c", led="#c2410c",
                   glass="#ffffff", glass_a=(.7, .4), edge="#ffffff",
-                  blobs=("#b98cff", "#ff8fc4", "#ffb37a"), blob_a=.5),
+                  blobs=("#ffd38a", "#ffb37a", "#f0d9a8"), blob_a=.55),
 }
 
 
