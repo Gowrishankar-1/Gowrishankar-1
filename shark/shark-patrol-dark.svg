@@ -4,15 +4,15 @@
 @keyframes swell{0%,100%{fill-opacity:0.05}50%{fill-opacity:0.1}}
 .hud{fill:#b8a37a;font-size:9px;letter-spacing:.5px}
 .acc{fill:#ffb000}
-.lbl{fill:#0d0b07;font-size:7px;font-weight:700}
+.lbl{fill:#060503;font-size:7px;font-weight:700}
 </style>
 <clipPath id="card"><rect width="877" height="179" rx="12"/></clipPath>
-<linearGradient id="glassFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff" stop-opacity="0.06"/><stop offset="1" stop-color="#ffffff" stop-opacity="0.02"/></linearGradient>
+<linearGradient id="glassFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff" stop-opacity="0.045"/><stop offset="1" stop-color="#ffffff" stop-opacity="0.015"/></linearGradient>
 <linearGradient id="glassEdge" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffd88a" stop-opacity=".55"/><stop offset=".45" stop-color="#ffd88a" stop-opacity=".08"/><stop offset="1" stop-color="#ffd88a" stop-opacity=".25"/></linearGradient>
-<radialGradient id="blob0"><stop offset="0" stop-color="#ffb000" stop-opacity="0.25"/><stop offset="1" stop-color="#ffb000" stop-opacity="0"/></radialGradient>
-<radialGradient id="blob1"><stop offset="0" stop-color="#ff5a1f" stop-opacity="0.25"/><stop offset="1" stop-color="#ff5a1f" stop-opacity="0"/></radialGradient>
-<radialGradient id="blob2"><stop offset="0" stop-color="#7a4a00" stop-opacity="0.25"/><stop offset="1" stop-color="#7a4a00" stop-opacity="0"/></radialGradient>
-<rect width="877" height="179" rx="12" fill="#0d0b07"/>
+<radialGradient id="blob0"><stop offset="0" stop-color="#ffb000" stop-opacity="0.12"/><stop offset="1" stop-color="#ffb000" stop-opacity="0"/></radialGradient>
+<radialGradient id="blob1"><stop offset="0" stop-color="#ff5a1f" stop-opacity="0.12"/><stop offset="1" stop-color="#ff5a1f" stop-opacity="0"/></radialGradient>
+<radialGradient id="blob2"><stop offset="0" stop-color="#7a4a00" stop-opacity="0.12"/><stop offset="1" stop-color="#7a4a00" stop-opacity="0"/></radialGradient>
+<rect width="877" height="179" rx="12" fill="#060503"/>
 <g clip-path="url(#card)">
 <circle cx="719" cy="18" r="482" fill="url(#blob0)"><animateTransform attributeName="transform" type="translate" values="0 0;-60 40;0 0" dur="16s" repeatCount="indefinite" calcMode="spline" keySplines=".45 0 .55 1;.45 0 .55 1" keyTimes="0;.5;1"/></circle>
 <circle cx="105" cy="170" r="438" fill="url(#blob1)"><animateTransform attributeName="transform" type="translate" values="0 0;70 -30;0 0" dur="21s" repeatCount="indefinite" calcMode="spline" keySplines=".45 0 .55 1;.45 0 .55 1" keyTimes="0;.5;1"/></circle>
