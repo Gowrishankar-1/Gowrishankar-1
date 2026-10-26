@@ -1,0 +1,43 @@
+{
+  "username": "Gowrishankar-1",
+  "title": "gowri@uow",
+  "sections": [
+    {
+      "lines": [
+        ["OS", "Ubuntu 24.04 LTS + Hyprland"],
+        ["Host", "University of Wollongong, NSW"],
+        ["Kernel", "B.Eng (Hons) Computer & Autonomous Sys"],
+        ["Role", "Co-founder & CTO @ Scycle AI"],
+        ["Research", "GenAI for Computer Vision (RA)"],
+        ["Prev", "Police Inspector, Singapore Police"]
+      ]
+    },
+    {
+      "lines": [
+        ["Now.Thesis", "Onboard AI shark detection on drones"],
+        ["Now.Building", "Yuga: multi-model AI workspace"],
+        ["Built.Hardware", "STM32 LoRaWAN counter, <2uA sleep"],
+        ["Built.Robots", "ROS 2 SLAM + Nav2 on TurtleBot3"]
+      ]
+    },
+    {
+      "lines": [
+        ["Languages.Code", "C, C++, Python, TypeScript, MATLAB"],
+        ["Stack.Embedded", "STM32, FreeRTOS, KiCad, LoRaWAN"],
+        ["Stack.AI", "YOLO, OpenCV, edge AI, LLM agents"],
+        ["Stack.Robotics", "ROS 2, Nav2, SLAM, Gazebo, RViz"]
+      ]
+    },
+    {
+      "header": "Contact",
+      "lines": [
+        ["Email", "gowrishankar2001@hotmail.com"],
+        ["LinkedIn", "gowrishankar-engineer"]
+      ]
+    },
+    {
+      "header": "GitHub Stats",
+      "stats": true
+    }
+  ]
+}
