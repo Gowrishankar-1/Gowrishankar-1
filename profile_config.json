@@ -1,43 +1,126 @@
 {
   "username": "Gowrishankar-1",
   "title": "gowri@uow",
-  "sections": [
+  "subtitle": "M. Gowrishankar // Computer & Autonomous Systems Engineering",
+  "base": "WOLLONGONG NSW",
+  "coords": "-34.42, 150.89",
+  "boot": [
+    [
+      "GCS-01 bootloader v2.7 // pilot console",
+      ""
+    ],
+    [
+      "STM32WLE5 core up, sleep current < 2uA",
+      "OK"
+    ],
+    [
+      "LoRaWAN uplink joined",
+      "OK"
+    ],
+    [
+      "YOLO weights loaded on edge device",
+      "OK"
+    ],
+    [
+      "ROS 2 graph: slam_toolbox, nav2",
+      "OK"
+    ],
+    [
+      "Scycle AI: CTO session online",
+      "OK"
+    ],
+    [
+      "pilot authenticated: gowri",
+      "OK"
+    ]
+  ],
+  "groups": [
     {
+      "name": "MISSION",
       "lines": [
-        ["OS", "Ubuntu 24.04 LTS + Hyprland"],
-        ["Host", "University of Wollongong, NSW"],
-        ["Kernel", "B.Eng (Hons) Computer & Autonomous Sys"],
-        ["Role", "Co-founder & CTO @ Scycle AI"],
-        ["Research", "GenAI for Computer Vision (RA)"],
-        ["Prev", "Police Inspector, Singapore Police"]
+        [
+          "Thesis",
+          "Onboard AI shark detection on drones"
+        ],
+        [
+          "Building",
+          "Yuga: multi-model AI workspace"
+        ]
       ]
     },
     {
+      "name": "ROLE",
       "lines": [
-        ["Now.Thesis", "Onboard AI shark detection on drones"],
-        ["Now.Building", "Yuga: multi-model AI workspace"],
-        ["Built.Hardware", "STM32 LoRaWAN counter, <2uA sleep"],
-        ["Built.Robots", "ROS 2 SLAM + Nav2 on TurtleBot3"]
+        [
+          "Now",
+          "Co-founder & CTO @ Scycle AI"
+        ],
+        [
+          "Research",
+          "GenAI for Computer Vision (RA)"
+        ],
+        [
+          "Degree",
+          "B.Eng (Hons) Computer & Autonomous Systems"
+        ],
+        [
+          "Prev",
+          "Police Inspector, Singapore Police"
+        ]
       ]
     },
     {
+      "name": "BUILT",
       "lines": [
-        ["Languages.Code", "C, C++, Python, TypeScript, MATLAB"],
-        ["Stack.Embedded", "STM32, FreeRTOS, KiCad, LoRaWAN"],
-        ["Stack.AI", "YOLO, OpenCV, edge AI, LLM agents"],
-        ["Stack.Robotics", "ROS 2, Nav2, SLAM, Gazebo, RViz"]
+        [
+          "Hardware",
+          "STM32 LoRaWAN counter, <2uA sleep"
+        ],
+        [
+          "Robots",
+          "ROS 2 SLAM + Nav2 on TurtleBot3"
+        ]
       ]
     },
     {
-      "header": "Contact",
+      "name": "STACK",
       "lines": [
-        ["Email", "gowrishankar2001@hotmail.com"],
-        ["LinkedIn", "gowrishankar-engineer"]
+        [
+          "Code",
+          "C, C++, Python, TypeScript, MATLAB"
+        ],
+        [
+          "Embedded",
+          "STM32, FreeRTOS, KiCad, LoRaWAN"
+        ],
+        [
+          "AI",
+          "YOLO, OpenCV, edge AI, LLM agents"
+        ],
+        [
+          "Robotics",
+          "ROS 2, Nav2, SLAM, Gazebo, RViz"
+        ]
       ]
     },
     {
-      "header": "GitHub Stats",
-      "stats": true
+      "name": "COMMS",
+      "lines": [
+        [
+          "Email",
+          "gowrishankar2001@hotmail.com"
+        ],
+        [
+          "LinkedIn",
+          "gowrishankar-engineer"
+        ]
+      ]
     }
+  ],
+  "topics": [
+    "/thesis/shark_detect",
+    "/scycle/yuga",
+    "/uow/genai_cv",
+    "/hw/lorawan_node"
   ]
 }
