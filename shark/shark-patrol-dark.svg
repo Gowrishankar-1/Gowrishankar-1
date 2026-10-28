@@ -388,6 +388,7 @@
 <rect class="sea" x="848" y="36" width="13" height="13" rx="2" style="animation-delay:-1.44s"/>
 <rect class="sea" x="848" y="52" width="13" height="13" rx="2" style="animation-delay:-1.94s"/>
 <rect class="sea" x="848" y="68" width="13" height="13" rx="2" style="animation-delay:-2.44s"/>
+<rect class="sea" x="848" y="84" width="13" height="13" rx="2" style="animation-delay:-2.94s"/>
 <g transform="translate(406.5,95.5) scale(0.82)"><path d="M-4.5,0 Q-1,-4 1.5,-9.5 Q2,-4 4.5,0 Z" fill="#fff1c2" opacity=".35"><animate attributeName="opacity" dur="18s" repeatCount="indefinite" values=".35;.35;1;1;.35;.35" keyTimes="0;0.2243;0.2323;.95;.985;1"/></path><path d="M-6,.8 Q-3,-.4 0,.8 T6,.8" fill="none" stroke="#fff1c2" stroke-width=".8" opacity=".5"/></g>
 <g opacity="0"><animate attributeName="opacity" dur="18s" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0;0.2243;0.2303;.95;.985;1"/><rect x="398" y="82" width="17" height="17" rx="1" fill="none" stroke="#ffb000" stroke-width="1.4"/></g>
 <g opacity="0"><animate attributeName="opacity" dur="18s" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0;0.2243;0.2303;0.2643;0.2843;1"/><rect x="398" y="72" width="48" height="10" rx="1.5" fill="#ffb000"/><text class="lbl" x="401" y="79.4">shark 0.81</text></g>
